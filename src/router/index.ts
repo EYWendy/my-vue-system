@@ -7,7 +7,27 @@ const router = createRouter({
     {
       path: '/',
       name: 'home',
-      component: HomeView
+      component: HomeView,
+      children:[
+        {
+          path: 'shops',
+          name: 'shops',
+          meta:{
+            isShow:true,
+            title:"商品管理"
+          },
+          component:()=>import('../views/ShopView.vue')
+        },
+        {
+          path: 'users',
+          name: 'users',
+          meta:{
+            isShow:true,
+            title:"用户管理"
+          },
+          component:()=>import('../views/UserView.vue')
+        }
+      ]
     },
     {
       path: '/about',
