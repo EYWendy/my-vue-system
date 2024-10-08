@@ -23,5 +23,17 @@ export default defineConfig({
     alias: {
       '@': fileURLToPath(new URL('./src', import.meta.url))
     }
+  },
+  server: {
+   // open: true,
+    cors: true,
+    proxy: {
+      '/api': {
+        target: 'http://39.104.205.255/youtu/',
+        // target: 'http://localhost:3000',
+        changeOrigin: true,
+        // rewrite: (path) => path.replace(/^\/api/, '') // 如果 API 的 URL 中有 '/api' 前缀，需要去除该前缀
+      }
+    }
   }
 })
