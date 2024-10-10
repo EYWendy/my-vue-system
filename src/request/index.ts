@@ -7,7 +7,7 @@ const service = axios.create({
     timeout: 5000,
     headers: {
         "Content-type": "application/json;charset=utf-8",
-        "Access-Control-Allow-Origin":"*",
+        "Access-Control-Allow-Origin": "*",
         'X-Requested-With': 'XMLHttpRequest',
     }
 })
@@ -17,17 +17,21 @@ service.interceptors.request.use((config) => {
     config.headers = config.headers || {}
 
     if (localStorage.getItem('token')) {
-        config.headers.token = localStorage.getItem('token') || ""
+        const token = localStorage.getItem('token');
+
+        if (token) {
+            config.headers.Authorization = "Bearer " + token
+        }
     }
 
-    if(config.method==='post' || config.method==='POST'){
-        config.data=JSON.stringify(config.data)
-      }
+    if (config.method === 'post' || config.method === 'POST') {
+        config.data = JSON.stringify(config.data)
+    }
 
     return config
 }, err => {
     console.log(err);
-  })
+})
 
 // 响应拦截
 service.interceptors.response.use((res) => {
@@ -38,8 +42,8 @@ service.interceptors.response.use((res) => {
     }
 
     return res.data
-},(err)=>{
-console.log(err)
+}, (err) => {
+    console.log(err)
 
 })
 
